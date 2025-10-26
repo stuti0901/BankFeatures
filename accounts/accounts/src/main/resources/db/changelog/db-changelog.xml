@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+
+    <!-- Create cards table -->
+    <changeSet id="1" author="stuti">
+        <createTable tableName="cards">
+            <column name="card_id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="mobile_number" type="VARCHAR(20)"/>
+            <column name="card_number" type="VARCHAR(50)"/>
+            <column name="card_type" type="VARCHAR(50)"/>
+            <column name="total_limit" type="INT"/>
+            <column name="amount_used" type="INT"/>
+            <column name="available_amount" type="INT"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(50)"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Insert dummy rows -->
+    <changeSet id="2" author="stuti">
+        <insert tableName="cards">
+            <column name="mobile_number" value="9876543210"/>
+            <column name="card_number" value="1234-5678-9012-3456"/>
+            <column name="card_type" value="CREDIT"/>
+            <column name="total_limit" valueNumeric="100000"/>
+            <column name="amount_used" valueNumeric="25000"/>
+            <column name="available_amount" valueNumeric="75000"/>
+            <column name="created_at" valueDate="2025-10-26T10:00:00"/>
+            <column name="created_by" value="system"/>
+        </insert>
+
+        <insert tableName="cards">
+            <column name="mobile_number" value="9123456789"/>
+            <column name="card_number" value="4321-8765-2109-6543"/>
+            <column name="card_type" value="DEBIT"/>
+            <column name="total_limit" valueNumeric="50000"/>
+            <column name="amount_used" valueNumeric="10000"/>
+            <column name="available_amount" valueNumeric="40000"/>
+            <column name="created_at" valueDate="2025-10-26T11:00:00"/>
+            <column name="created_by" value="system"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

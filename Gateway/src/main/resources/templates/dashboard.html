@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Services</title>
+</head>
+<body>
+<h1>Bank Services</h1>
+
+<!-- Buttons -->
+<div>
+    <a th:href="@{/api}"><button>Account</button></a>
+    <a th:href="@{/api}"><button>Cards</button></a>
+    <a th:href="@{/api}"><button>Loans</button></a>
+</div>
+
+<!-- Service Content -->
+<div>
+    <div th:if="${service} == 'account'">
+        <h2>Account Services</h2>
+        <ul>
+            <li>Check Balance</li>
+            <li>Transaction History</li>
+            <li>Update Details</li>
+        </ul>
+    </div>
+
+    <div th:if="${service} == 'cards'">
+        <h2>Card Services</h2>
+        <ul>
+            <li>View Credit Cards</li>
+            <li>Apply for New Card</li>
+            <li>Block Card</li>
+        </ul>
+    </div>
+
+    <div th:if="${service} == 'loans'">
+        <h2>Loan Services</h2>
+        <ul>
+            <li>Apply for Loan</li>
+            <li>Check Loan Status</li>
+            <li>Pay EMI</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

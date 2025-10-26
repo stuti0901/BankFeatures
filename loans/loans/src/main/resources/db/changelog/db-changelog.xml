@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Create loans table -->
+    <changeSet id="1" author="stuti">
+        <createTable tableName="loans">
+            <column name="loan_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="mobile_number" type="VARCHAR(20)"/>
+            <column name="loan_number" type="VARCHAR(50)"/>
+            <column name="loan_type" type="VARCHAR(50)"/>
+            <column name="total_loan" type="INT"/>
+            <column name="amount_paid" type="INT"/>
+            <column name="outstanding_amount" type="INT"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(50)"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="updated_by" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Insert dummy data -->
+    <changeSet id="2" author="stuti">
+        <insert tableName="loans">
+            <column name="loan_id" valueNumeric="1"/>
+            <column name="mobile_number" value="9876543210"/>
+            <column name="loan_number" value="LN1001"/>
+            <column name="loan_type" value="Home Loan"/>
+            <column name="total_loan" valueNumeric="5000000"/>
+            <column name="amount_paid" valueNumeric="1000000"/>
+            <column name="outstanding_amount" valueNumeric="4000000"/>
+        </insert>
+        <insert tableName="loans">
+            <column name="loan_id" valueNumeric="2"/>
+            <column name="mobile_number" value="9876501234"/>
+            <column name="loan_number" value="LN1002"/>
+            <column name="loan_type" value="Car Loan"/>
+            <column name="total_loan" valueNumeric="1500000"/>
+            <column name="amount_paid" valueNumeric="500000"/>
+            <column name="outstanding_amount" valueNumeric="1000000"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

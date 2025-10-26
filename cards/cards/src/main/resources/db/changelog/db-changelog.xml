@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Add dummy rows to 'cards' table -->
+    <changeSet id="1" author="stuti">
+        <insert tableName="cards">
+            <column name="mobile_number" value="9876543210"/>
+            <column name="card_number" value="4111111111111111"/>
+            <column name="card_type" value="CREDIT"/>
+            <column name="total_limit" valueNumeric="50000"/>
+            <column name="amount_used" valueNumeric="15000"/>
+            <column name="available_amount" valueNumeric="35000"/>
+        </insert>
+
+        <insert tableName="cards">
+            <column name="mobile_number" value="9123456780"/>
+            <column name="card_number" value="5500000000000004"/>
+            <column name="card_type" value="DEBIT"/>
+            <column name="total_limit" valueNumeric="30000"/>
+            <column name="amount_used" valueNumeric="5000"/>
+            <column name="available_amount" valueNumeric="25000"/>
+        </insert>
+
+        <insert tableName="cards">
+            <column name="mobile_number" value="9988776655"/>
+            <column name="card_number" value="6011000000000004"/>
+            <column name="card_type" value="CREDIT"/>
+            <column name="total_limit" valueNumeric="70000"/>
+            <column name="amount_used" valueNumeric="20000"/>
+            <column name="available_amount" valueNumeric="50000"/>
+        </insert>
+
+        <insert tableName="cards">
+            <column name="mobile_number" value="9011223344"/>
+            <column name="card_number" value="3530111333300000"/>
+            <column name="card_type" value="DEBIT"/>
+            <column name="total_limit" valueNumeric="40000"/>
+            <column name="amount_used" valueNumeric="10000"/>
+            <column name="available_amount" valueNumeric="30000"/>
+        </insert>
+
+        <insert tableName="cards">
+            <column name="mobile_number" value="9870011223"/>
+            <column name="card_number" value="3566002020360505"/>
+            <column name="card_type" value="CREDIT"/>
+            <column name="total_limit" valueNumeric="60000"/>
+            <column name="amount_used" valueNumeric="25000"/>
+            <column name="available_amount" valueNumeric="35000"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
