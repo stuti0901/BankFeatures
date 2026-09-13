@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+    <!-- The old db-changelog.xml incorrectly creates cards and is retained only
+         as historical reference. Existing DATABASECHANGELOG rows are preserved. -->
+    <changeSet id="accounts-schema-v1" author="stuti">
+        <sqlFile path="schema.sql"/>
+    </changeSet>
+    <changeSet id="accounts-audit-backfill-v1" author="stuti">
+        <sql>
+            UPDATE customer SET created_at = COALESCE(created_at, CURRENT_TIMESTAMP), created_by = COALESCE(created_by, 'system') WHERE created_at IS NULL OR created_by IS NULL;
+            UPDATE accounts SET created_at = COALESCE(created_at, CURRENT_TIMESTAMP), created_by = COALESCE(created_by, 'system') WHERE created_at IS NULL OR created_by IS NULL;
+        </sql>
+    </changeSet>
+    <changeSet id="accounts-customer-sequence-v1" author="stuti">
+        <sql>SELECT setval(pg_get_serial_sequence('customer', 'customer_id'), GREATEST(COALESCE((SELECT MAX(customer_id) FROM customer), 0) + 1, nextval(pg_get_serial_sequence('customer', 'customer_id'))), false);</sql>
+    </changeSet>
+</databaseChangeLog>

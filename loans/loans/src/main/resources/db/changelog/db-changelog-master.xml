@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+    <!-- Preserve the original table and seed changesets and their checksums. -->
+    <include file="db/changelog/db-changelog.xml"/>
+    <changeSet id="loans-sequence-audit-v1" author="stuti">
+        <sql>
+            SELECT setval(pg_get_serial_sequence('loans', 'loan_id'), GREATEST(COALESCE((SELECT MAX(loan_id) FROM loans), 0) + 1, nextval(pg_get_serial_sequence('loans', 'loan_id'))), false);
+            UPDATE loans SET created_at = COALESCE(created_at, CURRENT_TIMESTAMP), created_by = COALESCE(created_by, 'system') WHERE created_at IS NULL OR created_by IS NULL;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
