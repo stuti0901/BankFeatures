@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+    <changeSet id="cards-schema-v1" author="stuti">
+        <sqlFile path="schema.sql"/>
+    </changeSet>
+    <!-- Preserve the original seed changeset and its checksum. -->
+    <include file="db/changelog/db-changelog.xml"/>
+    <changeSet id="cards-audit-backfill-v1" author="stuti">
+        <sql>UPDATE cards SET created_at = COALESCE(created_at, CURRENT_TIMESTAMP), created_by = COALESCE(created_by, 'system') WHERE created_at IS NULL OR created_by IS NULL;</sql>
+    </changeSet>
+</databaseChangeLog>

@@ -47,5 +47,6 @@ public class CustomerDto {
     @Schema(
             description = "Account details of the Customer"
     )
+    @jakarta.validation.Valid
     private AccountsDto accountsDto;
 }
