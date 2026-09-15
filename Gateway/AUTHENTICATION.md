@@ -131,3 +131,18 @@ The existing login page now submits JSON and holds the token only in page memory
 This protects requests through port 7000. Direct backend ports still have their existing behavior and should be private to trusted infrastructure. Authentication does not add customer-specific ownership or role authorization. Use HTTPS outside local development.
 
 Implementation references: [Spring Security WebFlux](https://docs.spring.io/spring-security/reference/6.5/reactive/configuration/webflux.html), [JJWT](https://github.com/jwtk/jjwt).
+
+## Customer Summary API
+
+The Summary service is protected by the same JWT validation as Accounts, Cards and Loans.
+Both the JWT authentication filter matcher and authenticated-path matcher include
+`/summary/api/**`. Missing or invalid tokens return 401 before forwarding.
+
+Route 3 forwards `/summary/api/**` unchanged to
+`${SUMMARY_SERVICE_URL:http://localhost:8070}`. Routes 0 through 2 are unchanged.
+
+Start `com.example.summary.SummaryApplication`, then call
+`GET http://localhost:7000/summary/api/customer?mobileNumber=9876543210`
+with `Authorization: Bearer <accessToken>`.
+
+See [Summary run and Postman instructions](../summary/README.md).
