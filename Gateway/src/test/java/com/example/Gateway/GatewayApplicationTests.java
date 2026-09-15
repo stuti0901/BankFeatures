@@ -17,6 +17,7 @@ class GatewayApplicationTests {
     private static final HttpServer accounts = backend("accounts");
     private static final HttpServer cards = backend("cards");
     private static final HttpServer loans = backend("loans");
+    private static final HttpServer summary = backend("summary");
     @Autowired WebTestClient client;
 
     private static HttpServer backend(String name) {
@@ -42,8 +43,8 @@ class GatewayApplicationTests {
         properties.add("JWT_AUDIENCE", () -> audience);
         properties.add("JWT_TTL_SECONDS", () -> 300);
 
-        HttpServer[] servers = {accounts, cards, loans};
-        String[] names = {"ACCOUNTS_SERVICE_URL", "CARDS_SERVICE_URL", "LOANS_SERVICE_URL"};
+        HttpServer[] servers = {accounts, cards, loans, summary};
+        String[] names = {"ACCOUNTS_SERVICE_URL", "CARDS_SERVICE_URL", "LOANS_SERVICE_URL", "SUMMARY_SERVICE_URL"};
         for (int i = 0; i < servers.length; i++) {
             final HttpServer server = servers[i];
             properties.add(names[i],
@@ -66,6 +67,7 @@ class GatewayApplicationTests {
         accounts.stop(0);
         cards.stop(0);
         loans.stop(0);
+        summary.stop(0);
     }
 
     @Test
@@ -81,6 +83,14 @@ class GatewayApplicationTests {
                 .expectStatus().isOk().expectBody(String.class)
                 .isEqualTo("loans:/api/fetch?mobileNumber=9876543210");
         client.get().uri("/api/fetch").exchange().expectStatus().isNotFound();
+    }
+
+    @Test
+    void summaryRoutePreservesPathAndQueryWithValidJwt() {
+        client.get().uri("/summary/api/customer?mobileNumber=9876543210")
+                .header("Authorization", "Bearer " + login()).exchange()
+                .expectStatus().isOk().expectBody(String.class)
+                .isEqualTo("summary:/summary/api/customer?mobileNumber=9876543210");
     }
 
     @Test
@@ -102,7 +112,7 @@ class GatewayApplicationTests {
     private static final java.util.concurrent.atomic.AtomicInteger backendRequests =
             new java.util.concurrent.atomic.AtomicInteger();
     private static final String[] protectedPaths = {
-            "/accounts/api/fetch", "/cards/api/fetch", "/loans/api/fetch"
+            "/accounts/api/fetch", "/cards/api/fetch", "/loans/api/fetch", "/summary/api/customer"
     };
 
     private String login() {
