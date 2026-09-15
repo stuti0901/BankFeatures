@@ -64,7 +64,7 @@ public class SecurityConfig {
         var repository = NoOpServerSecurityContextRepository.getInstance();
         var jwtFilter = new AuthenticationWebFilter(jwtManager);
         jwtFilter.setRequiresAuthenticationMatcher(ServerWebExchangeMatchers.pathMatchers(
-                "/accounts/api/**", "/cards/api/**", "/loans/api/**"));
+                "/accounts/api/**", "/cards/api/**", "/loans/api/**", "/summary/api/**"));
         jwtFilter.setServerAuthenticationConverter(new BearerTokenServerAuthenticationConverter());
         jwtFilter.setSecurityContextRepository(repository);
         jwtFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(unauthorized));
@@ -79,7 +79,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/", "/login", "/auth/login", "/actuator/health", "/actuator/health/**",
                                 "/dashboard").permitAll()
-                        .pathMatchers("/accounts/api/**", "/cards/api/**", "/loans/api/**").authenticated()
+                        .pathMatchers("/accounts/api/**", "/cards/api/**", "/loans/api/**", "/summary/api/**").authenticated()
                         .pathMatchers("/actuator/**").denyAll()
                         .anyExchange().permitAll())
                 .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)
